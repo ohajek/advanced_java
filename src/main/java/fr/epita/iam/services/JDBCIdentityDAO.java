@@ -28,7 +28,21 @@ public class JDBCIdentityDAO {
 	private static final Logger LOGGER = LogManager.getLogger(JDBCIdentityDAO.class);
 	
 	
-	private Connection getConnection() throws Exception {
+	/**
+	 * @throws Exception 
+	 * 
+	 */
+	public JDBCIdentityDAO() {
+		try {
+			createConnection();
+		}
+		catch(Exception e) {
+			System.out.println("Excception while connecting to database");
+			System.exit(-1);
+		}
+	}
+	
+	private void createConnection() throws Exception {
 		try {
 			connection.getSchema();
 		}
@@ -41,33 +55,14 @@ public class JDBCIdentityDAO {
 				
 				connection = DriverManager.getConnection(connectionString, user, password);
 				LOGGER.info("Connected to : {}", connection.getSchema());
-				return connection;
 			}
 			catch(Exception excep) {
 				excep.printStackTrace();
 				throw excep;
 			}
 		}
-		
-		return null;
 	}
 	
-	/**
-	 * @throws Exception 
-	 * 
-	 */
-	public JDBCIdentityDAO() {
-		/*this.connection = DriverManager.getConnection("jdbc:derby:memory:IAM_DB;create=true", "admin", "admin");
-		System.out.println(connection.getSchema());
-		*/
-		try {
-			getConnection();
-		}
-		catch(Exception e) {
-			System.out.println("Excception while connecting to database");
-			System.exit(-1);
-		}
-	}
 	
 	/**
 	 * Writes a new identity element into the database from given Identity object informations
