@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Tue Mar 28 20:44:34 CEST 2017:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.13.1.1 - (1765088): instance a816c00e-015b-163b-ded6-0000070a7f18 
+on database directory memory:C:\Users\Nixx\workspace\iam-core-demo\IAM_DB with class loader sun.misc.Launcher$AppClassLoader@2503dbd3 
+Loaded from file:/C:/Users/Nixx/.m2/repository/org/apache/derby/derby/10.13.1.1/derby-10.13.1.1.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_121-b13
+user.dir=C:\Users\Nixx\workspace\iam-core-demo
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
