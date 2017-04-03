@@ -33,6 +33,8 @@ public class TestSpring {
 	private static final Logger LOGGER = LogManager.getLogger(TestSpring.class);
 	
 
+	
+	
 	@BeforeClass
 	public static void globalSetup() throws SQLException{
 		LOGGER.info("beginning the setup");
@@ -58,7 +60,7 @@ public class TestSpring {
 	 * @throws SQLException
 	 */
 	private static Connection getConnection() throws SQLException {
-		Connection connection = DriverManager.getConnection("jdbc:derby:memory:IAM_DB;create=true", "TOM", "TOM");
+		Connection connection = DriverManager.getConnection("jdbc:derby:memory:IAM_DB;create=true", "admin", "admin");
 		return connection;
 	}
 	

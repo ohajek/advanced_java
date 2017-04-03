@@ -12,6 +12,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.sql.DataSource;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,6 +28,11 @@ import fr.epita.iam.iamcore.tests.TestJDBCDAO;
  */
 public class JDBCIdentityDAO {
 
+	
+	@Inject
+	@Named("dataSourceBean")
+	private DataSource ds;
+	
 	private Connection connection;
 	private static final Logger LOGGER = LogManager.getLogger(JDBCIdentityDAO.class);
 	
@@ -32,6 +41,7 @@ public class JDBCIdentityDAO {
 	 * @throws Exception 
 	 * 
 	 */
+	/*
 	public JDBCIdentityDAO() {
 		try {
 			createConnection();
@@ -62,7 +72,10 @@ public class JDBCIdentityDAO {
 			}
 		}
 	}
+	*/
 	
+	private JDBCIdentityDAO() throws SQLException {
+	}
 	
 	/**
 	 * Writes a new identity element into the database from given Identity object informations
@@ -70,6 +83,8 @@ public class JDBCIdentityDAO {
 	 * @throws SQLException
 	 */
 	public void writeIdentity(Identity identity) throws SQLException {
+		
+		connection = ds.getConnection();
 		String insertStatement = "insert into IDENTITIES (IDENTITIES_DISPLAYNAME, IDENTITIES_EMAIL, "
 				+ "IDENTITIES_PASSWORD, IDENTITIES_PRIVILEGE) "
 				+ "values(?, ?, ?, ?)";

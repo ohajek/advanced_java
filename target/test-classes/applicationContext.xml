@@ -5,9 +5,12 @@
 
 	<bean id="dao" name="dao" class="fr.epita.iam.services.JDBCIdentityDAO" />
 
-	<bean id="propertiesConfig"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location" value="test.properties"></property>
+	<bean
+	    class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	
+	    <property name="location">
+	        <value>test.properties</value>
+	    </property>
 	</bean>
 
 	<bean id="dataSourceBean"
@@ -17,7 +20,6 @@
 		<property name="username" value="${jdbc.connection.username}" />
 		<property name="password" value="${jdbc.connection.password}" />
 	</bean>
-
 
 
 </beans>
