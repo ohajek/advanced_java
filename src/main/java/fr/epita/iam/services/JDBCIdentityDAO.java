@@ -16,7 +16,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import fr.epita.iam.datamodel.Identity;
-import fr.epita.iam.iamcore.test.TestJDBCDAO;
+import fr.epita.iam.iamcore.tests.TestJDBCDAO;
 
 /**
  * @author ohajek

@@ -1,4 +1,4 @@
-package fr.epita.iam.iamcore.test;
+package fr.epita.iam.iamcore.tests;
 
 import org.junit.Test;
 

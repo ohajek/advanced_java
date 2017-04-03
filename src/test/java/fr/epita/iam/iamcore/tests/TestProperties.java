@@ -1,4 +1,4 @@
-package fr.epita.iam.iamcore.test;
+package fr.epita.iam.iamcore.tests;
 
 import java.io.File;
 import java.io.FileInputStream;
