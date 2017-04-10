@@ -3,17 +3,36 @@
  */
 package fr.epita.iam.datamodel;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * Class representing single user identity in the database
  * @author ohajek
  *
  */
+@Entity
+@Table(name="IDENTITIES")
 public class Identity {
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="IDENTITIES_ID")
+	private long id;
+	
+	@Column(name="IDENTITIES_UID")
 	private String uid;
+	@Column(name="IDENTITIES_DISPLAYNAME")
 	private String displayName;
+	@Column(name="IDENTITIES_EMAIL")
 	private String email;
+	@Column(name="IDENTITIES_PASSWORD")
 	private String password;
+	@Column(name="IDENTITIES_PRIVILEGE")
 	private String privilege;
 	
 	

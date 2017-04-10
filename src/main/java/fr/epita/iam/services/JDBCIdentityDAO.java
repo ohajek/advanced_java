@@ -36,43 +36,7 @@ public class JDBCIdentityDAO {
 	private Connection connection;
 	private static final Logger LOGGER = LogManager.getLogger(JDBCIdentityDAO.class);
 	
-	
-	/**
-	 * @throws Exception 
-	 * 
-	 */
-	/*
-	public JDBCIdentityDAO() {
-		try {
-			createConnection();
-		}
-		catch(Exception e) {
-			System.out.println("Excception while connecting to database");
-			System.exit(-1);
-		}
-	}
-	
-	private void createConnection() throws Exception {
-		try {
-			connection.getSchema();
-		}
-		catch(Exception e) {
-			try {
-				Configuration config = Configuration.getInstance();
-				String user = config.getUserName();
-				String password = config.getPassword();
-				String connectionString = config.getJdbcConnectionString();
-				
-				connection = DriverManager.getConnection(connectionString, user, password);
-				LOGGER.info("Connected to : {}", connection.getSchema());
-			}
-			catch(Exception excep) {
-				excep.printStackTrace();
-				throw excep;
-			}
-		}
-	}
-	*/
+
 	
 	private JDBCIdentityDAO() throws SQLException {
 	}

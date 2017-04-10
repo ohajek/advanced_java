@@ -44,20 +44,6 @@ public class TestJDBCDAO {
 	public static void globalSetup(DataSource source) throws SQLException {
 		LOGGER.info("beginning the setup");
 		Connection connection =  source.getConnection();
-		/*
-		PreparedStatement pstmt = connection.prepareStatement("CREATE TABLE IDENTITIES " 
-	    + " (IDENTITIES_UID INT NOT NULL GENERATED ALWAYS AS IDENTITY CONSTRAINT IDENTITIES_PK PRIMARY KEY, " 
-	    + " IDENTITIES_DISPLAYNAME VARCHAR(255), "
-	    + " IDENTITIES_EMAIL VARCHAR(255), "
-	    + " IDENTITIES_PASSWORD VARCHAR(255), "
-	    + " IDENTITIES_PRIVILEGE VARCHAR(255) "
-	    + " )");
-
-		pstmt.execute();
-		connection.commit();
-		pstmt.close();
-		connection.close();
-		*/
 		LOGGER.info("setup finished : ready to proceed with the testcase");
 		
 	}
