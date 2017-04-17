@@ -18,8 +18,6 @@ import javax.sql.DataSource;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 import fr.epita.iam.datamodel.Identity;
 import fr.epita.iam.iamcore.tests.TestJDBCDAO;
@@ -28,22 +26,19 @@ import fr.epita.iam.iamcore.tests.TestJDBCDAO;
  * @author ohajek
  *
  */
-public class JDBCIdentityDAO {
+public class JDBCIdentityDAOzaloha {
 
-	
-	@Inject
-	SessionFactory sFactory;
 	
 	@Inject
 	@Named("dataSourceBean")
 	private DataSource ds;
 	
 	private Connection connection;
-	private static final Logger LOGGER = LogManager.getLogger(JDBCIdentityDAO.class);
+	private static final Logger LOGGER = LogManager.getLogger(JDBCIdentityDAOzaloha.class);
 	
 
 	
-	private JDBCIdentityDAO() throws SQLException {
+	private JDBCIdentityDAOzaloha() throws SQLException {
 	}
 	
 	/**
@@ -52,8 +47,18 @@ public class JDBCIdentityDAO {
 	 * @throws SQLException
 	 */
 	public void writeIdentity(Identity identity) throws SQLException {
-		Session session = sFactory.openSession();
-		session.saveOrUpdate(identity);
+		
+		connection = ds.getConnection();
+		String insertStatement = "insert into IDENTITIES (IDENTITIES_DISPLAYNAME, IDENTITIES_EMAIL, "
+				+ "IDENTITIES_PASSWORD, IDENTITIES_PRIVILEGE) "
+				+ "values(?, ?, ?, ?)";
+		PreparedStatement pstmtInsert = connection.prepareStatement(insertStatement);
+		pstmtInsert.setString(1, identity.getDisplayName());
+		pstmtInsert.setString(2, identity.getEmail());
+		pstmtInsert.setString(3, identity.getPassword());
+		pstmtInsert.setString(4, identity.getPrivilege());
+		
+		pstmtInsert.execute();
 	}
 	
 	/**
@@ -62,8 +67,22 @@ public class JDBCIdentityDAO {
 	 * @throws SQLException
 	 */
 	public void modifyIdentity(Identity identity) throws SQLException {
-		Session session = sFactory.openSession();
-		session.saveOrUpdate(identity);
+		String modifyStatement = "UPDATE IDENTITIES "
+				+ "SET IDENTITIES_DISPLAYNAME=?,"
+				+ "IDENTITIES_EMAIL=?,"
+				+ "IDENTITIES_PASSWORD=?,"
+				+ "IDENTITIES_PRIVILEGE=?"
+				+ "WHERE IDENTITIES_UID=?";
+		
+		PreparedStatement pstmtModify = connection.prepareStatement(modifyStatement);
+		pstmtModify.setString(1, identity.getDisplayName());
+		pstmtModify.setString(2, identity.getEmail());
+		pstmtModify.setString(3, identity.getPassword());
+		pstmtModify.setString(4, identity.getPrivilege());
+		pstmtModify.setString(5, identity.getUid());
+		
+		pstmtModify.execute();
+
 	}
 	
 	/**
@@ -73,9 +92,16 @@ public class JDBCIdentityDAO {
 	 */
 	public List<Identity> readAll() throws SQLException {
 		List<Identity> identities = new ArrayList<Identity>();
-		Session session = sFactory.openSession();
-		identities = session.createCriteria(Identity.class).list();
-		
+
+		PreparedStatement pstmtSelect = connection.prepareStatement("select * from IDENTITIES");
+		ResultSet rs = pstmtSelect.executeQuery();
+		while (rs.next()) {
+			String displayName = rs.getString("IDENTITIES_DISPLAYNAME");
+			String uid = String.valueOf(rs.getString("IDENTITIES_UID"));
+			String email = rs.getString("IDENTITIES_EMAIL");
+			Identity identity = new Identity(uid, displayName, email);
+			identities.add(identity);
+		}
 		return identities;
 	}
 	
@@ -85,9 +111,12 @@ public class JDBCIdentityDAO {
 	 * @throws SQLException
 	 */
 	public void deleteIdentity(String identityID) throws SQLException {
-		Session session = sFactory.openSession();
-		Identity identity = (Identity) session.load(Identity.class, identityID);
-		session.delete(identity);
+		String deleteStatement = "DELETE FROM IDENTITIES WHERE IDENTITIES_UID = ?";
+		
+		PreparedStatement pstmtDelete = connection.prepareStatement(deleteStatement);
+		pstmtDelete.setString(1, identityID);
+		
+		pstmtDelete.execute();
 	}
 
 	/**
